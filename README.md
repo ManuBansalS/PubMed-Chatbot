@@ -33,8 +33,8 @@ python main.py
 ```
 PubMed-Chatbot/
 ├── data/
-    ├── raw/
-    └── processed/
+│   ├── raw/
+│   └── processed/
 ├── src/
 │   ├── database/
 │   │   └──vector_store.py
