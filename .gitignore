@@ -2,5 +2,5 @@
 .venv
 **/__pycache__/**
 *.log
-src/data/raw/
-src/data/processed/
+src/data/raw/*
+src/data/processed/*
