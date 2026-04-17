@@ -32,8 +32,12 @@ class PubMedClient:
 
             # Save to data/raw
             os.makedirs("data/raw", exist_ok=True)
-            with open("data/raw/latest_fetch.xml", "w", encoding="utf-8") as f:
-                f.write(raw_xml)
+            with open("data/raw/latest_fetch.xml", "wb") as f:
+                # Safely handle both string and byte responses
+                if isinstance(raw_xml, str):
+                    f.write(raw_xml.encode("utf-8"))
+                else:
+                    f.write(raw_xml)
             
             return id_list
         except Exception as e:
