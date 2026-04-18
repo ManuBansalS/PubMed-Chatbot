@@ -3,7 +3,7 @@ import os
 import json
 from Bio import Entrez
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from utils.config import Config
+from src_rag.utils.config import Config
 
 class PubMedParser:
     def __init__(self):

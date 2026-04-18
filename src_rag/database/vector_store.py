@@ -1,6 +1,6 @@
 import chromadb
 import os
-from utils.config import Config
+from src_rag.utils.config import Config
 
 class VectorStore:
     def __init__(self):

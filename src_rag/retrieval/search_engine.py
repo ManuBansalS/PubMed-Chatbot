@@ -1,5 +1,5 @@
-from database.vector_store import VectorStore
-from utils.logger import logger
+from src_rag.database.vector_store import VectorStore
+from src_rag.utils.logger import logger
 
 class SearchEngine:
     def __init__(self):

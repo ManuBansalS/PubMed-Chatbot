@@ -15,3 +15,7 @@ python-dotenv>=1.2.2
 pydantic>=2.7.0
 langchain>=0.3.0
 langchain-community>=0.3.0
+
+# --- WEB SERVER (UI Integration) ---
+fastapi>=0.100.0
+uvicorn>=0.23.0

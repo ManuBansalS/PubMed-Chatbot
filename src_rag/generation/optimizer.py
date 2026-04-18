@@ -1,6 +1,6 @@
 from google import genai
-from utils.config import Config
-from utils.logger import logger
+from src_rag.utils.config import Config
+from src_rag.utils.logger import logger
 
 def get_optimized_search_query(user_query: str):
     """
