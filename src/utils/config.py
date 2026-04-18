@@ -13,7 +13,7 @@ class Config:
 
     # Model Settings
     EMBED_MODEL = "text-embedding-004"
-    LLM_MODEL = "gemini-1.5-flash" # Optimized for speed and context
+    LLM_MODEL = "gemini-2.5-flash" # Updated to the latest Gemini model [cite: 150]
     
     # RAG Settings
     CHUNK_SIZE = 1000

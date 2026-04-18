@@ -11,7 +11,7 @@ class SearchEngine:
         Takes the user's question, searches the cloud vector store, 
         and returns the best matching text snippets for the LLM.
         """
-        logger.info(f"Searching for context related to: {user_query}")  [cite: 163, 165]
+        logger.info(f"Searching for context related to: {user_query}")  # [cite: 163, 165]
         
         try:
             # Query the cloud collection for the top K most similar chunks

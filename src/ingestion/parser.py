@@ -1,6 +1,8 @@
 import io
+import os
+import json
 from Bio import Entrez
-from langchain_classic.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from utils.config import Config
 
 class PubMedParser:
@@ -11,16 +13,38 @@ class PubMedParser:
         )
 
     def parse_to_chunks(self, xml_data: str):
-        # Cleans XML and splits text into manageable chunks[cite: 42, 43]
+        """
+        Parses XML, chunks text, and saves a copy to data/processed for auditability.
+        """
         records = Entrez.read(io.BytesIO(xml_data.encode('utf-8')))
         chunks = []
         
-        for article in records['PubmedArticle']:
-            title = article['MedlineCitation']['Article']['ArticleTitle']
-            abstract = article['MedlineCitation']['Article'].get('Abstract', {}).get('AbstractText', [""])[0]
-            pmid = article['MedlineCitation']['PMID']
-            
-            text = f"Title: {title}\nAbstract: {abstract}\nSource: https://pubmed.ncbi.nlm.nih.gov/{pmid}/"
-            chunks.extend(self.splitter.split_text(text))
+        for article in records.get('PubmedArticle', []):
+            try:
+                citation = article.get('MedlineCitation', {})
+                article_data = citation.get('Article', {})
+                
+                title = article_data.get('ArticleTitle', 'No Title')
+                pmid = citation.get('PMID', 'Unknown')
+                
+                # Safely extract and join abstract text fragments
+                abstract_text = article_data.get('Abstract', {}).get('AbstractText', [])
+                abstract = " ".join([str(text) for text in abstract_text]) if abstract_text else "No abstract."
+                
+                # Create the clean text format
+                text = f"Title: {title}\nAbstract: {abstract}\nSource: https://pubmed.ncbi.nlm.nih.gov/{pmid}/"
+                
+                # Split into chunks
+                chunks.extend(self.splitter.split_text(text))
+                
+            except Exception as e:
+                print(f"Skipping article due to parsing error: {e}")
+                continue
+        
+        # AUDIT LOG: Save processed text to disk 
+        # This allows you to verify what is actually being sent to the Vector Store
+        os.makedirs("data/processed", exist_ok=True)
+        with open("data/processed/latest_chunks.json", "w", encoding="utf-8") as f:
+            json.dump(chunks, f, indent=4)
             
         return chunks

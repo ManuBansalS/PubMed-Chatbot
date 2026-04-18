@@ -3,19 +3,17 @@ import ssl
 from Bio import Entrez
 from utils.config import Config
 
-
 class PubMedClient:
     def __init__(self):
-        # Bypass SSL verification for environments with strict SSL issues (e.g., some corporate networks)
+        # Bypass SSL verification to prevent connection crashes
         ssl._create_default_https_context = ssl._create_unverified_context
-        # Always set an email for Entrez API compliance
         Entrez.email = Config.EMAIL
         Entrez.api_key = Config.PUBMED_API_KEY
 
     def fetch_top_articles(self, query: str):
-        """Search PubMed and save raw XML to data/raw."""
+        """Search PubMed and return raw XML string."""
         try:
-            # Step 1: Search for IDs
+            # 1. Search for IDs
             search_handle = Entrez.esearch(db="pubmed", term=query, retmax=Config.TOP_ARTICLES)
             search_results = Entrez.read(search_handle)
             search_handle.close()
@@ -23,23 +21,24 @@ class PubMedClient:
 
             if not id_list:
                 print("No articles found.")
-                return []
+                return None
 
-            # Step 2: Fetch full details (XML format)
+            # 2. Fetch full details (XML format)
             fetch_handle = Entrez.efetch(db="pubmed", id=",".join(id_list), rettype="xml", retmode="text")
             raw_xml = fetch_handle.read()
             fetch_handle.close()
 
-            # Save to data/raw
+            # 3. Save to data/raw in binary mode
             os.makedirs("data/raw", exist_ok=True)
             with open("data/raw/latest_fetch.xml", "wb") as f:
-                # Safely handle both string and byte responses
                 if isinstance(raw_xml, str):
                     f.write(raw_xml.encode("utf-8"))
                 else:
                     f.write(raw_xml)
             
-            return id_list
+            # Return the XML content as string for the parser
+            return raw_xml if isinstance(raw_xml, str) else raw_xml.decode("utf-8")
+            
         except Exception as e:
             print(f"Error fetching from PubMed: {e}")
-            return []
+            return None
