@@ -12,8 +12,8 @@ class Config:
     CHROMA_API_KEY = os.getenv("CHROMA_API_KEY")
 
     # Model Settings
-    EMBED_MODEL = "text-embedding-004"
-    LLM_MODEL = "gemini-2.5-flash" # Updated to the latest Gemini model [cite: 150]
+    EMBED_MODEL = "gemini-embedding-001"
+    LLM_MODEL = "gemma-3-1b-it" # Updated to the latest Gemini model [cite: 150]
     
     # RAG Settings
     CHUNK_SIZE = 1000

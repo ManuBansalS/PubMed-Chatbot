@@ -1,6 +1,6 @@
 .env
 .venv
 **/__pycache__/**
-src_rag/logs/*.log
-src_rag/data/raw/*.*
-src_rag/data/processed/*.*
+src_rag/logs/*
+src_rag/data/raw/*
+src_rag/data/processed/*
