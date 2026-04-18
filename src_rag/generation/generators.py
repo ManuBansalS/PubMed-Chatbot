@@ -1,6 +1,6 @@
 from google import genai
-from utils.config import Config
-from utils.logger import logger
+from src_rag.utils.config import Config
+from src_rag.utils.logger import logger
 
 class ResponseGenerator:
     def __init__(self):

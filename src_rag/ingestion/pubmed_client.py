@@ -1,7 +1,7 @@
 import os
 import ssl
 from Bio import Entrez
-from utils.config import Config
+from src_rag.utils.config import Config
 
 class PubMedClient:
     def __init__(self):
