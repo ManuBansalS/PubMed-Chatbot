@@ -43,8 +43,8 @@ class PubMedParser:
         
         # AUDIT LOG: Save processed text to disk 
         # This allows you to verify what is actually being sent to the Vector Store
-        os.makedirs("data/processed", exist_ok=True)
-        with open("data/processed/latest_chunks.json", "w", encoding="utf-8") as f:
+        os.makedirs("src_rag/data/processed", exist_ok=True)
+        with open("src_rag/data/processed/latest_chunks.json", "w", encoding="utf-8") as f:
             json.dump(chunks, f, indent=4)
             
         return chunks

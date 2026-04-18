@@ -29,8 +29,8 @@ class PubMedClient:
             fetch_handle.close()
 
             # 3. Save to data/raw in binary mode
-            os.makedirs("data/raw", exist_ok=True)
-            with open("data/raw/latest_fetch.xml", "wb") as f:
+            os.makedirs("src_rag/data/raw", exist_ok=True)
+            with open("src_rag/data/raw/latest_fetch.xml", "wb") as f:
                 if isinstance(raw_xml, str):
                     f.write(raw_xml.encode("utf-8"))
                 else:

@@ -1,14 +1,10 @@
 import logging
-import os
-
-# Ensure a logs directory exists for background record-keeping
-os.makedirs("logs", exist_ok=True)
 
 # 1. Setup the standard logging format
 log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 
 # 2. Configure File logging (keeps all details for debugging)
-file_handler = logging.FileHandler("logs/pipeline.log")
+file_handler = logging.FileHandler("src_rag/logs/pipeline.log")
 file_handler.setLevel(logging.INFO)
 file_handler.setFormatter(logging.Formatter(log_format))
 
